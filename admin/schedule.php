@@ -72,9 +72,9 @@
                     <div class="admin-form-group">
                         <label>Группа</label>
                         <select name="group_name" required>
-                            <option value="КИП-01">КИП-01</option>
-                            <option value="АСУ-05">АСУ-05</option>
-                            <option value="ПРОГ-22">ПРОГ-22</option>
+                            <option value="Оператор ЧПУ-1 (дневная)">Оператор ЧПУ-1 (дневная)</option>
+                            <option value="Контролер ОТК-3 (вечерняя)">Контролер ОТК-3 (вечерняя)</option>
+                            <option value="Наладчик ЧПУ-5 (субботняя)">Наладчик ЧПУ-5 (субботняя)</option>
                         </select>
                     </div>
                     <div class="admin-form-group">
@@ -131,9 +131,9 @@
                                     </td>
                                     <td>
                                         <select name="group_name" required>
-                                            <option value="КИП-01" <?= $row['group_name'] == 'КИП-01' ? 'selected' : '' ?>>КИП-01</option>
-                                            <option value="АСУ-05" <?= $row['group_name'] == 'АСУ-05' ? 'selected' : '' ?>>АСУ-05</option>
-                                            <option value="ПРОГ-22" <?= $row['group_name'] == 'ПРОГ-22' ? 'selected' : '' ?>>ПРОГ-22</option>
+                                            <option value="Оператор ЧПУ-1 (дневная)" <?= $row['group_name'] == 'Оператор ЧПУ-1 (дневная)' ? 'selected' : '' ?>>Оператор ЧПУ-1 (дневная)</option>
+                                            <option value="Контролер ОТК-3 (вечерняя)" <?= $row['group_name'] == 'Контролер ОТК-3 (вечерняя)' ? 'selected' : '' ?>>Контролер ОТК-3 (вечерняя)</option>
+                                            <option value="Наладчик ЧПУ-5 (субботняя)" <?= $row['group_name'] == 'Наладчик ЧПУ-5 (субботняя)' ? 'selected' : '' ?>>Наладчик ЧПУ-5 (субботняя)</option>
                                         </select>
                                     </td>
                                     <td>

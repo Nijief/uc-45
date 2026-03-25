@@ -28,9 +28,9 @@
                 <label for="group">Фильтр по группе:</label>
                 <select name="group" id="group" class="filter-select">
                     <option value="all" <?= $group == 'all' ? 'selected' : '' ?>>Все группы</option>
-                    <option value="КИП-01" <?= $group == 'КИП-01' ? 'selected' : '' ?>>КИП-01</option>
-                    <option value="АСУ-05" <?= $group == 'АСУ-05' ? 'selected' : '' ?>>АСУ-05</option>
-                    <option value="ПРОГ-22" <?= $group == 'ПРОГ-22' ? 'selected' : '' ?>>ПРОГ-22</option>
+                    <option value="Оператор ЧПУ-1 (дневная)" <?= $group == 'Оператор ЧПУ-1 (дневная)' ? 'selected' : '' ?>>Оператор ЧПУ-1 (дневная)</option>
+                    <option value="Контролер ОТК-3 (вечерняя)" <?= $group == 'Контролер ОТК-3 (вечерняя)' ? 'selected' : '' ?>>Контролер ОТК-3 (вечерняя)</option>
+                    <option value="Наладчик ЧПУ-5 (субботняя)" <?= $group == 'Наладчик ЧПУ-5 (субботняя)' ? 'selected' : '' ?>>Наладчик ЧПУ-5 (субботняя)</option>
                 </select>
             </div>
             <div class="filter-group">
