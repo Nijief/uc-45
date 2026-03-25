@@ -74,75 +74,102 @@
     $news = getNews($pdo);
 ?>
 
-<div class="container">
-    <h1>Управление новостями</h1>
-    
-    <div class="admin-section" style="background: #F8FAFE; padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
-        <h2>Добавить новость</h2>
-        <form method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label>Заголовок</label>
-                <input type="text" name="title" required>
-            </div>
-            <div class="form-group">
-                <label>Текст новости</label>
-                <textarea name="content" rows="6" required></textarea>
-            </div>
-            <div class="form-group">
-                <label>Изображение (jpg, png, gif, webp, до 2МБ)</label>
-                <input type="file" name="image">
-            </div>
-            <button type="submit" name="add_news" class="btn">Добавить</button>
-        </form>
-    </div>
-    
-    <h2>Существующие новости</h2>
-    <div class="cards-grid">
-        <?php foreach ($news as $item): ?>
-            <div class="card">
-                <div class="card-image">
-                    <?php if ($item['image']): ?>
-                        <img src="<?= SITE_URL ?>/assets/uploads/<?= sanitize($item['image']) ?>" alt="<?= sanitize($item['title']) ?>">
-                    <?php endif; ?>
+<link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/admin.css">
+
+<div class="admin-container">
+    <div class="admin-dashboard">
+        <!-- Заголовок страницы -->
+        <div class="admin-page-header">
+            <h1>Управление новостями</h1>
+            <p>Добавление, редактирование и удаление новостей</p>
+        </div>
+        
+        <!-- Форма добавления новости -->
+        <div class="admin-form-section">
+            <h2>Добавить новость</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="admin-form-group">
+                    <label>Заголовок</label>
+                    <input type="text" name="title" required>
                 </div>
-                <div class="card-content">
-                    <h3><?= sanitize($item['title']) ?></h3>
-                    <div class="date"><?= date('d.m.Y', strtotime($item['created_at'])) ?></div>
-                    <details>
-                        <summary>Просмотр текста</summary>
-                        <p style="margin-top: 0.5rem;"><?= sanitize(mb_substr($item['content'], 0, 150)) ?>...</p>
-                    </details>
-                    
-                    <!-- Форма редактирования -->
-                    <details style="margin: 1rem 0;">
-                        <summary style="color: #007BFF; cursor: pointer;">Редактировать</summary>
-                        <form method="POST" enctype="multipart/form-data" style="margin-top: 1rem;">
-                            <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                            <input type="hidden" name="current_image" value="<?= sanitize($item['image']) ?>">
-                            <div class="form-group">
-                                <label>Заголовок</label>
-                                <input type="text" name="title" value="<?= sanitize($item['title']) ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Текст</label>
-                                <textarea name="content" rows="4" required><?= sanitize($item['content']) ?></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Новое изображение (оставьте пустым, чтобы не менять)</label>
-                                <input type="file" name="image">
-                            </div>
-                            <button type="submit" name="edit_news" class="btn-outline" style="padding: 0.5rem 1rem;">Сохранить изменения</button>
-                        </form>
-                    </details>
-                    
-                    <!-- Форма удаления -->
-                    <form method="POST" onsubmit="return confirm('Удалить новость?')">
-                        <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                        <button type="submit" name="delete_news" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer;">Удалить</button>
-                    </form>
+                <div class="admin-form-group">
+                    <label>Текст новости</label>
+                    <textarea name="content" rows="6" required></textarea>
                 </div>
-            </div>
-        <?php endforeach; ?>
+                <div class="admin-form-group">
+                    <label>Изображение (jpg, png, gif, webp, до 2МБ)</label>
+                    <input type="file" name="image">
+                </div>
+                <button type="submit" name="add_news" class="btn-save">➕ Добавить новость</button>
+            </form>
+        </div>
+        
+        <!-- Список существующих новостей -->
+        <h2 style="margin-bottom: 1.5rem; color: #1A2B4C;">Существующие новости</h2>
+        <div class="admin-card-grid">
+            <?php foreach ($news as $item): ?>
+                <div class="admin-card">
+                    <div class="admin-card-image">
+                        <?php if ($item['image']): ?>
+                            <img src="<?= SITE_URL ?>/assets/uploads/<?= sanitize($item['image']) ?>" alt="<?= sanitize($item['title']) ?>">
+                        <?php else: ?>
+                            <div class="admin-card-image-placeholder">📰</div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="admin-card-content">
+                        <div class="admin-card-title"><?= sanitize($item['title']) ?></div>
+                        <div class="admin-card-meta">
+                            <span>📅 <?= date('d.m.Y', strtotime($item['created_at'])) ?></span>
+                        </div>
+                        
+                        <!-- Просмотр текста -->
+                        <details class="admin-details">
+                            <summary>Просмотр текста</summary>
+                            <div class="admin-details-content">
+                                <p><?= sanitize(mb_substr($item['content'], 0, 150)) ?>...</p>
+                            </div>
+                        </details>
+                        
+                        <!-- Форма редактирования -->
+                        <details class="admin-details">
+                            <summary>Редактировать</summary>
+                            <div class="admin-details-content">
+                                <form method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="id" value="<?= $item['id'] ?>">
+                                    <input type="hidden" name="current_image" value="<?= sanitize($item['image']) ?>">
+                                    
+                                    <div class="admin-form-group">
+                                        <label>Заголовок</label>
+                                        <input type="text" name="title" value="<?= sanitize($item['title']) ?>" required>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label>Текст</label>
+                                        <textarea name="content" rows="4" required><?= sanitize($item['content']) ?></textarea>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label>Новое изображение (оставьте пустым, чтобы не менять)</label>
+                                        <input type="file" name="image">
+                                    </div>
+                                    <button type="submit" name="edit_news" class="btn-edit">
+                                        ✏️ Сохранить изменения
+                                    </button>
+                                </form>
+                            </div>
+                        </details>
+                        
+                        <!-- Форма удаления -->
+                        <div class="admin-card-actions">
+                            <form method="POST" onsubmit="return confirm('Удалить новость?')" style="display: inline;">
+                                <input type="hidden" name="id" value="<?= $item['id'] ?>">
+                                <button type="submit" name="delete_news" class="btn-delete">
+                                    🗑️ Удалить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>
 

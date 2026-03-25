@@ -80,103 +80,146 @@
     $programs = getPrograms($pdo);
 ?>
 
-<div class="container">
-    <h1>Управление образовательными программами</h1>
-    
-    <div class="admin-section" style="background: #F8FAFE; padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
-        <h2>Добавить программу</h2>
-        <form method="POST" enctype="multipart/form-data">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-                <div class="form-group">
-                    <label>Название программы</label>
-                    <input type="text" name="title" required>
+<link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/admin.css">
+
+<div class="admin-container">
+    <div class="admin-dashboard">
+        <!-- Заголовок страницы -->
+        <div class="admin-page-header">
+            <h1>Управление образовательными программами</h1>
+            <p>Добавление, редактирование и удаление образовательных программ</p>
+        </div>
+        
+        <!-- Форма добавления программы -->
+        <div class="admin-form-section">
+            <h2>Добавить программу</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label>Название программы</label>
+                        <input type="text" name="title" required>
+                    </div>
+                    <div class="admin-form-group">
+                        <label>Длительность</label>
+                        <input type="text" name="duration" placeholder="72 часа" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Длительность</label>
-                    <input type="text" name="duration" placeholder="72 часа" required>
+                
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label>Требования к слушателям</label>
+                        <input type="text" name="requirements" placeholder="Среднее профессиональное образование" required>
+                    </div>
+                    <div class="admin-form-group">
+                        <label>Учебный план (кратко)</label>
+                        <input type="text" name="curriculum" placeholder="Основные темы курса" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Требования к слушателям</label>
-                    <input type="text" name="requirements" placeholder="Среднее профессиональное образование" required>
+                
+                <div class="admin-form-row">
+                    <div class="admin-form-group">
+                        <label>Изображение</label>
+                        <input type="file" name="image">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Учебный план (кратко)</label>
-                    <input type="text" name="curriculum" placeholder="Основные темы курса" required>
+                
+                <div class="admin-form-group">
+                    <label>Полное описание</label>
+                    <textarea name="description" rows="4" required></textarea>
                 </div>
-                <div class="form-group">
-                    <label>Изображение</label>
-                    <input type="file" name="image">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Полное описание</label>
-                <textarea name="description" rows="4" required></textarea>
-            </div>
-            <button type="submit" name="add_program" class="btn">Добавить программу</button>
-        </form>
-    </div>
-    
-    <h2>Существующие программы</h2>
-    <div class="cards-grid">
-        <?php foreach ($programs as $program): ?>
-            <div class="card">
-                <div class="card-image">
-                    <?php if ($program['image']): ?>
-                        <img src="<?= SITE_URL ?>/assets/uploads/<?= sanitize($program['image']) ?>" alt="<?= sanitize($program['title']) ?>">
-                    <?php else: ?>
-                        <div class="card-image-placeholder">📘</div>
-                    <?php endif; ?>
-                </div>
-                <div class="card-content">
-                    <h3><?= sanitize($program['title']) ?></h3>
-                    <p><strong>Длительность:</strong> <?= sanitize($program['duration']) ?></p>
-                    <details>
-                        <summary>Подробнее</summary>
-                        <p><strong>Требования:</strong> <?= sanitize($program['requirements']) ?></p>
-                        <p><strong>Учебный план:</strong> <?= sanitize($program['curriculum']) ?></p>
-                        <p><strong>Описание:</strong> <?= sanitize(mb_substr($program['description'], 0, 100)) ?>...</p>
-                    </details>
-                    
-                    <details style="margin: 1rem 0;">
-                        <summary style="color: #007BFF; cursor: pointer;">Редактировать</summary>
-                        <form method="POST" enctype="multipart/form-data" style="margin-top: 1rem;">
-                            <input type="hidden" name="id" value="<?= $program['id'] ?>">
-                            <input type="hidden" name="current_image" value="<?= sanitize($program['image']) ?>">
-                            <div class="form-group">
-                                <label>Название</label>
-                                <input type="text" name="title" value="<?= sanitize($program['title']) ?>" required>
+                
+                <button type="submit" name="add_program" class="btn-save">
+                    ➕ Добавить программу
+                </button>
+            </form>
+        </div>
+        
+        <!-- Список существующих программ -->
+        <h2 style="margin-bottom: 1.5rem; color: #1A2B4C;">Существующие программы</h2>
+        <div class="admin-card-grid">
+            <?php foreach ($programs as $program): ?>
+                <div class="admin-card">
+                    <div class="admin-card-image">
+                        <?php if ($program['image']): ?>
+                            <img src="<?= SITE_URL ?>/assets/uploads/<?= sanitize($program['image']) ?>" alt="<?= sanitize($program['title']) ?>">
+                        <?php else: ?>
+                            <div class="admin-card-image-placeholder">📘</div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="admin-card-content">
+                        <div class="admin-card-title"><?= sanitize($program['title']) ?></div>
+                        <div class="admin-card-meta">
+                            <span>⏱️ <?= sanitize($program['duration']) ?></span>
+                        </div>
+                        
+                        <!-- Краткая информация -->
+                        <details class="admin-details">
+                            <summary>Подробнее</summary>
+                            <div class="admin-details-content">
+                                <p><strong>📋 Требования:</strong> <?= sanitize($program['requirements']) ?></p>
+                                <p><strong>📖 Учебный план:</strong> <?= sanitize($program['curriculum']) ?></p>
+                                <p><strong>📝 Описание:</strong> <?= sanitize(mb_substr($program['description'], 0, 100)) ?>...</p>
                             </div>
-                            <div class="form-group">
-                                <label>Длительность</label>
-                                <input type="text" name="duration" value="<?= sanitize($program['duration']) ?>" required>
+                        </details>
+                        
+                        <!-- Форма редактирования -->
+                        <details class="admin-details">
+                            <summary>Редактировать</summary>
+                            <div class="admin-details-content">
+                                <form method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="id" value="<?= $program['id'] ?>">
+                                    <input type="hidden" name="current_image" value="<?= sanitize($program['image']) ?>">
+                                    
+                                    <div class="admin-form-group">
+                                        <label>Название</label>
+                                        <input type="text" name="title" value="<?= sanitize($program['title']) ?>" required>
+                                    </div>
+                                    
+                                    <div class="admin-form-group">
+                                        <label>Длительность</label>
+                                        <input type="text" name="duration" value="<?= sanitize($program['duration']) ?>" required>
+                                    </div>
+                                    
+                                    <div class="admin-form-group">
+                                        <label>Требования</label>
+                                        <input type="text" name="requirements" value="<?= sanitize($program['requirements']) ?>" required>
+                                    </div>
+                                    
+                                    <div class="admin-form-group">
+                                        <label>Учебный план</label>
+                                        <input type="text" name="curriculum" value="<?= sanitize($program['curriculum']) ?>" required>
+                                    </div>
+                                    
+                                    <div class="admin-form-group">
+                                        <label>Описание</label>
+                                        <textarea name="description" rows="3" required><?= sanitize($program['description']) ?></textarea>
+                                    </div>
+                                    
+                                    <div class="admin-form-group">
+                                        <label>Новое изображение (оставьте пустым, чтобы не менять)</label>
+                                        <input type="file" name="image">
+                                    </div>
+                                    
+                                    <button type="submit" name="edit_program" class="btn-edit">
+                                        ✏️ Сохранить изменения
+                                    </button>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <label>Требования</label>
-                                <input type="text" name="requirements" value="<?= sanitize($program['requirements']) ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Учебный план</label>
-                                <input type="text" name="curriculum" value="<?= sanitize($program['curriculum']) ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Описание</label>
-                                <textarea name="description" rows="3" required><?= sanitize($program['description']) ?></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Новое изображение (оставьте пустым, чтобы не менять)</label>
-                                <input type="file" name="image">
-                            </div>
-                            <button type="submit" name="edit_program" class="btn-outline" style="padding: 0.5rem 1rem;">Сохранить изменения</button>
-                        </form>
-                    </details>
-                    
-                    <form method="POST" onsubmit="return confirm('Удалить программу?')">
-                        <input type="hidden" name="id" value="<?= $program['id'] ?>">
-                        <button type="submit" name="delete_program" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer;">Удалить</button>
-                    </form>
+                        </details>
+                        
+                        <!-- Форма удаления -->
+                        <div class="admin-card-actions">
+                            <form method="POST" onsubmit="return confirm('Удалить программу?')" style="display: inline;">
+                                <input type="hidden" name="id" value="<?= $program['id'] ?>">
+                                <button type="submit" name="delete_program" class="btn-delete">
+                                    🗑️ Удалить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>
 

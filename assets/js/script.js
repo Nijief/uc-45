@@ -6,57 +6,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchResults = document.getElementById('searchResults');
     const searchForm = document.getElementById('searchForm');
     
-    if (searchInput) {
-        let searchTimeout;
-        
-        searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            const query = this.value.trim();
-            
-            if (query.length < 2) {
-                searchResults.style.display = 'none';
-                return;
-            }
-            
-            searchTimeout = setTimeout(() => {
-                performSearch(query);
-            }, 300);
-        });
-        
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const query = searchInput.value.trim();
-            if (query.length >= 2) {
-                performSearch(query);
-            }
-        });
-        
-        // Закрытие результатов при клике вне
-        document.addEventListener('click', function(e) {
-            if (!searchContainer.contains(e.target)) {
-                searchResults.style.display = 'none';
-            }
-        });
-    }
+    if (!searchInput || !searchResults) return;
     
+    let searchTimeout;
+    
+    // Функция поиска
     async function performSearch(query) {
+        if (!query || query.length < 2) {
+            searchResults.style.display = 'none';
+            return;
+        }
+        
         try {
-            // Здесь будет AJAX-запрос к серверу для поиска
-            // Пока демонстрационные данные
-            const results = [
-                { title: 'КИПиА и промышленная автоматика', description: 'Настройка, программирование контроллеров...', type: 'program', url: '/pages/program_detail.php?id=1' },
-                { title: 'Открыт набор на весенние курсы', description: 'Старт занятий 10 апреля...', type: 'news', url: '/pages/news_detail.php?id=1' }
-            ].filter(item => 
-                item.title.toLowerCase().includes(query.toLowerCase()) ||
-                item.description.toLowerCase().includes(query.toLowerCase())
-            );
+            // Используем относительный путь к search.php
+            const response = await fetch('/Test/admin/search.php?q=' + encodeURIComponent(query));
             
-            if (results.length > 0) {
+            if (!response.ok) {
+                throw new Error('Ошибка сети: ' + response.status);
+            }
+            
+            const results = await response.json();
+            
+            if (results && results.length > 0) {
                 searchResults.innerHTML = results.map(item => `
                     <div class="search-result-item" onclick="window.location.href='${item.url}'">
-                        <div class="search-result-title">${escapeHtml(item.title)}</div>
-                        <div class="search-result-description">${escapeHtml(item.description.substring(0, 100))}</div>
-                        <div class="search-result-category">${item.type === 'program' ? 'Программа' : 'Новость'}</div>
+                        <div class="search-result-title">${item.title}</div>
+                        <div class="search-result-description">${item.description}</div>
+                        <div class="search-result-category">${item.type === 'program' ? '📚 Программа' : '📰 Новость'}</div>
                     </div>
                 `).join('');
                 searchResults.style.display = 'block';
@@ -66,20 +42,51 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Ошибка поиска:', error);
+            searchResults.innerHTML = '<div class="search-no-results">Ошибка поиска. Попробуйте позже.</div>';
+            searchResults.style.display = 'block';
         }
     }
     
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+    // Поиск при вводе текста
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        const query = this.value.trim();
+        
+        if (query.length < 2) {
+            searchResults.style.display = 'none';
+            return;
+        }
+        
+        searchTimeout = setTimeout(() => {
+            performSearch(query);
+        }, 300);
+    });
+    
+    // Поиск при отправке формы
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query.length >= 2) {
+                performSearch(query);
+            }
+        });
     }
+    
+    // Закрытие результатов при клике вне
+    document.addEventListener('click', function(e) {
+        const searchContainer = document.querySelector('.search-container');
+        if (searchContainer && !searchContainer.contains(e.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
     
     // Активная ссылка в меню
     const currentPath = window.location.pathname;
     document.querySelectorAll('.nav-menu a').forEach(link => {
-        if (link.getAttribute('href') === currentPath || 
-            (currentPath === '/' || currentPath === '/index.php') && link.getAttribute('href') === '/index.php') {
+        const href = link.getAttribute('href');
+        if (href === currentPath || 
+            (currentPath === '/' || currentPath === '/index.php') && href === '/index.php') {
             link.classList.add('active');
         }
     });

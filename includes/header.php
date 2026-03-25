@@ -24,8 +24,6 @@
                 <?php if (isAdmin()): ?>
                     <li><a href="<?= SITE_URL ?>/admin/">Админ-панель</a></li>
                     <li><a href="<?= SITE_URL ?>/admin/logout.php">Выйти</a></li>
-                <?php else: ?>
-                    <li><a href="<?= SITE_URL ?>/admin/login.php">Вход</a></li>
                 <?php endif; ?>
             </ul>
             <div class="search-container">

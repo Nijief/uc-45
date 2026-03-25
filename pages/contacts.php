@@ -47,44 +47,83 @@
 </div>
 
 <script>
-document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    const feedbackForm = document.getElementById('feedbackForm');
     
-    const name = document.getElementById('nameInput').value;
-    const email = document.getElementById('emailInput').value;
-    const message = document.getElementById('msgInput').value;
-    const resultDiv = document.getElementById('formMsgResult');
-    
-    if (!name || !email || !message) {
-        resultDiv.innerHTML = '<span style="color:#dc3545;">Пожалуйста, заполните все поля.</span>';
-        return;
-    }
-    
-    const submitBtn = this.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Отправка...';
-    submitBtn.disabled = true;
-    
-    try {
-        const response = await fetch('<?= SITE_URL ?>/admin/send_message.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, message })
+    if (feedbackForm) {
+        feedbackForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const nameInput = document.getElementById('nameInput');
+            const emailInput = document.getElementById('emailInput');
+            const msgInput = document.getElementById('msgInput');
+            const resultDiv = document.getElementById('formMsgResult');
+            const submitBtn = this.querySelector('button[type="submit"]');
+            
+            // Проверяем, что все элементы существуют
+            if (!nameInput || !emailInput || !msgInput || !resultDiv || !submitBtn) {
+                console.error('Не найдены элементы формы');
+                if (resultDiv) resultDiv.innerHTML = '<span style="color:#dc3545;">Техническая ошибка. Попробуйте позже.</span>';
+                return;
+            }
+            
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const message = msgInput.value.trim();
+            
+            // Валидация
+            if (!name) {
+                resultDiv.innerHTML = '<span style="color:#dc3545;">Пожалуйста, укажите ваше имя.</span>';
+                return;
+            }
+            if (!email) {
+                resultDiv.innerHTML = '<span style="color:#dc3545;">Пожалуйста, укажите email для обратной связи.</span>';
+                return;
+            }
+            if (!email.match(/^[^\s@]+@([^\s@]+\.)+[^\s@]+$/)) {
+                resultDiv.innerHTML = '<span style="color:#dc3545;">Пожалуйста, введите корректный email адрес.</span>';
+                return;
+            }
+            if (!message) {
+                resultDiv.innerHTML = '<span style="color:#dc3545;">Пожалуйста, введите текст сообщения.</span>';
+                return;
+            }
+            
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('<?= SITE_URL ?>/admin/send_message.php', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, message })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = '<span style="color:#28a745;">✓ Сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.</span>';
+                    nameInput.value = '';
+                    emailInput.value = '';
+                    msgInput.value = '';
+                    // Очищаем сообщение через 5 секунд
+                    setTimeout(() => {
+                        if (resultDiv) resultDiv.innerHTML = '';
+                    }, 5000);
+                } else {
+                    resultDiv.innerHTML = '<span style="color:#dc3545;">❌ Ошибка: ' + (result.error || 'Не удалось отправить сообщение') + '</span>';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                resultDiv.innerHTML = '<span style="color:#dc3545;">❌ Ошибка сети. Проверьте подключение и попробуйте снова.</span>';
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
         });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            resultDiv.innerHTML = '<span style="color:#28a745;">✓ Сообщение отправлено. Свяжемся с вами в ближайшее время.</span>';
-            document.getElementById('feedbackForm').reset();
-        } else {
-            resultDiv.innerHTML = '<span style="color:#dc3545;">Ошибка: ' + (result.error || 'Не удалось отправить') + '</span>';
-        }
-    } catch (error) {
-        resultDiv.innerHTML = '<span style="color:#dc3545;">Ошибка сети. Попробуйте позже.</span>';
-    } finally {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
     }
 });
 </script>
