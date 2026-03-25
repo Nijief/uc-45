@@ -1,0 +1,663 @@
+/* assets/css/admin.css */
+/* Стили для админ-панели в едином стиле с основным сайтом */
+
+/* ===== ОБЩИЕ СТИЛИ ===== */
+.admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ===== СТРАНИЦА ВХОДА ===== */
+.admin-login-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1A2B4C 0%, #1f3a60 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.admin-login-card {
+    background: white;
+    border-radius: 28px;
+    padding: 2.5rem;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.admin-login-header h1 {
+    color: #1A2B4C;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-login-header p {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.admin-login-logo {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #007BFF 0%, #0056b3 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.admin-login-logo svg {
+    width: 32px;
+    height: 32px;
+    color: white;
+}
+
+.admin-login-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.admin-login-form label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1A2B4C;
+    display: block;
+}
+
+.admin-login-form input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 2px solid #eef2f8;
+    border-radius: 16px;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+.admin-login-form input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+    outline: none;
+}
+
+.admin-login-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.admin-back-link {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.admin-back-link a {
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.admin-back-link a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    background: #fee2e2;
+    color: #dc3545;
+    padding: 0.75rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.success-message {
+    background: #d4edda;
+    color: #28a745;
+    padding: 0.75rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* ===== ГЛАВНАЯ АДМИН-ПАНЕЛИ (ДАШБОРД) ===== */
+.admin-dashboard {
+    padding: 2rem 0;
+}
+
+.welcome-header {
+    background: linear-gradient(135deg, #F8FAFE 0%, #ffffff 100%);
+    border-radius: 28px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #eef2f8;
+}
+
+.welcome-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: #1A2B4C;
+}
+
+.welcome-header p {
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+/* Статистика */
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 24px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eef2f8;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #007BFF10 0%, #0056b310 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.stat-icon svg {
+    width: 28px;
+    height: 28px;
+    color: #007BFF;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1A2B4C;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Меню админки */
+.admin-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.admin-menu-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid #eef2f8;
+    transition: all 0.3s;
+}
+
+.admin-menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+.admin-menu-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #eef2f8;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-menu-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #007BFF 0%, #0056b3 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-menu-icon svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+}
+
+.admin-menu-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1A2B4C;
+}
+
+.admin-menu-description {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.admin-menu-content {
+    padding: 1.5rem;
+}
+
+.admin-menu-stats {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.admin-menu-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #007BFF;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.admin-menu-link:hover {
+    background: #0056b3;
+    gap: 0.75rem;
+    color: white;
+}
+
+/* ===== СТРАНИЦЫ УПРАВЛЕНИЯ (НОВОСТИ, ПРОГРАММЫ, РАСПИСАНИЕ) ===== */
+.admin-page-header {
+    background: linear-gradient(135deg, #F8FAFE 0%, #ffffff 100%);
+    border-radius: 28px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #eef2f8;
+}
+
+.admin-page-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: #1A2B4C;
+}
+
+.admin-page-header p {
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+/* Форма добавления */
+.admin-form-section {
+    background: white;
+    border-radius: 28px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid #eef2f8;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.admin-form-section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #007BFF;
+    display: inline-block;
+    color: #1A2B4C;
+}
+
+/* Карточки для списка элементов */
+.admin-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid #eef2f8;
+    transition: all 0.3s;
+}
+
+.admin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+.admin-card-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #F0F2F5 0%, #e0e4e9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-card-image-placeholder {
+    font-size: 3rem;
+    color: #1A2B4C;
+    opacity: 0.5;
+}
+
+.admin-card-content {
+    padding: 1.5rem;
+}
+
+.admin-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1A2B4C;
+    margin-bottom: 0.5rem;
+}
+
+.admin-card-meta {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.admin-card-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eef2f8;
+    flex-wrap: wrap;
+}
+
+/* Кнопки действий */
+.btn-edit {
+    background: #28a745;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 40px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn-edit:hover {
+    background: #218838;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 40px;
+    font-size: 0.85rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 40px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    color: white;
+}
+
+/* Стили для details/summary (раскрывающиеся блоки) */
+.admin-details {
+    margin: 1rem 0;
+}
+
+.admin-details summary {
+    color: #007BFF;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.admin-details summary:hover {
+    text-decoration: underline;
+}
+
+.admin-details-content {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #F8FAFE;
+    border-radius: 16px;
+}
+
+/* Таблица для расписания */
+.admin-schedule-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-schedule-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.admin-schedule-table th,
+.admin-schedule-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eef2f8;
+}
+
+.admin-schedule-table th {
+    background: #F8FAFE;
+    color: #1A2B4C;
+    font-weight: 700;
+}
+
+.admin-schedule-table tr:hover td {
+    background: #FAFCFE;
+}
+
+.admin-schedule-table input,
+.admin-schedule-table select {
+    padding: 0.5rem;
+    border: 1px solid #dce3ec;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.admin-schedule-table input:focus,
+.admin-schedule-table select:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+}
+
+/* Формы */
+.admin-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.admin-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #1A2B4C;
+}
+
+.admin-form-group input,
+.admin-form-group textarea,
+.admin-form-group select {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 2px solid #eef2f8;
+    border-radius: 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.admin-form-group input:focus,
+.admin-form-group textarea:focus,
+.admin-form-group select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+    outline: none;
+}
+
+.admin-form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Кнопка сохранения */
+.btn-save {
+    background: linear-gradient(135deg, #007BFF 0%, #0056b3 100%);
+    color: white;
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #004099 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,123,255,0.4);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 0 16px;
+    }
+    
+    .admin-card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-menu-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .welcome-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .admin-schedule-table {
+        overflow-x: auto;
+        display: block;
+    }
+    
+    .admin-schedule-table table {
+        min-width: 600px;
+    }
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-fade-in {
+    animation: fadeIn 0.4s ease;
+}

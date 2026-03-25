@@ -512,6 +512,14 @@
             margin: 1.5rem 0;
         }
 
+        .program-detail img {
+            border-radius: 28px;
+            height: 300;
+            width: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .navbar {
