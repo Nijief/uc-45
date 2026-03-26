@@ -7,13 +7,11 @@
 
 <div class="admin-container">
     <div class="admin-dashboard">
-        <!-- Приветственный блок -->
         <div class="welcome-header">
             <h1>Панель управления</h1>
             <p>Управление контентом сайта</p>
         </div>
         
-        <!-- Меню админки в стиле вашего CSS -->
         <div class="admin-menu-grid">
             <div class="admin-menu-card">
                 <div class="admin-menu-header">

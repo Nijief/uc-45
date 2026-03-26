@@ -1,0 +1,23 @@
+# Минимальный .htaccess для XAMPP
+
+# Включаем rewrite
+RewriteEngine On
+
+# Запрещаем просмотр директорий
+Options -Indexes
+
+# Запрещаем доступ к системным файлам
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Запрещаем доступ к config.php
+<Files "config.php">
+    Require all denied
+</Files>
+
+# Красивые страницы ошибок
+ErrorDocument 404 /pages/errors/404.html
+
+# Кодировка
+AddDefaultCharset UTF-8

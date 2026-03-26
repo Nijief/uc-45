@@ -2,7 +2,6 @@
     require_once 'auth_check.php';
     include '../includes/header.php';
 
-    // Добавление записи
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_schedule'])) {
         $date = $_POST['date'];
         $time = $_POST['time'];
@@ -16,7 +15,6 @@
         exit;
     }
 
-    // Редактирование
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_schedule'])) {
         $id = $_POST['id'];
         $date = $_POST['date'];
@@ -31,7 +29,6 @@
         exit;
     }
 
-    // Удаление
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_schedule'])) {
         $id = $_POST['id'];
         $stmt = $pdo->prepare("DELETE FROM schedule WHERE id = ?");
@@ -47,13 +44,11 @@
 
 <div class="admin-container">
     <div class="admin-dashboard">
-        <!-- Заголовок страницы -->
         <div class="admin-page-header">
             <h1>Управление расписанием</h1>
             <p>Добавление, редактирование и удаление записей расписания</p>
         </div>
         
-        <!-- Форма добавления занятия -->
         <div class="admin-form-section">
             <h2>Добавить занятие</h2>
             <form method="POST">
@@ -91,17 +86,16 @@
                 </div>
                 
                 <button type="submit" name="add_schedule" class="btn-save">
-                    ➕ Добавить занятие
+                    + Добавить занятие
                 </button>
             </form>
         </div>
         
-        <!-- Таблица расписания -->
         <h2 style="margin-bottom: 1.5rem; color: #1A2B4C;">Расписание</h2>
         
         <?php if (empty($schedule)): ?>
             <div style="background: #F8FAFE; border-radius: 20px; padding: 3rem; text-align: center; color: #6c757d;">
-                📅 Занятий пока нет. Добавьте первое занятие!
+                Занятий пока нет. Добавьте первое занятие!
             </div>
         <?php else: ?>
             <div class="admin-schedule-table">
@@ -144,10 +138,10 @@
                                     </td>
                                     <td style="white-space: nowrap;">
                                         <button type="submit" name="edit_schedule" class="btn-edit" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
-                                            💾 Сохранить
+                                            Сохранить
                                         </button>
                                         <button type="submit" name="delete_schedule" class="btn-delete" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="return confirm('Удалить запись?')">
-                                            🗑️ Удалить
+                                            Удалить
                                         </button>
                                     </td>
                                 </form>

@@ -16,6 +16,17 @@
     </div>
 </section>
 
+<section class="about-organization">
+    <div class="container">
+        <div class="about-content">
+            <h2 class="about-org-title">Об организации</h2>
+            <div class="about-org-text">
+                <p>Учебный центр АО «НПО Курганприбор» осуществляет подготовку, переподготовку и повышение квалификации для своих сотрудников. Мы предоставляем современные образовательные программы по контрольно-измерительным приборам и автоматике, метрологии, автоматизации технологических процессов и цифровой трансформации производства, обеспечивая высокий уровень профессиональной подготовки обучающихся.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="container">
     <section style="margin: 4rem 0;">
         <div class="section-title">
@@ -53,7 +64,7 @@
                         <?php if ($news['image']): ?>
                             <img src="<?= SITE_URL ?>/assets/uploads/<?= sanitize($news['image']) ?>" alt="<?= sanitize($news['title']) ?>">
                         <?php else: ?>
-                            <div class="card-image-placeholder">📰</div>
+                            <div class="card-image-placeholder"></div>
                         <?php endif; ?>
                     </div>
                     <div class="card-content">

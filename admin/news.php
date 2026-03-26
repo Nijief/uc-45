@@ -2,7 +2,6 @@
     require_once 'auth_check.php';
     include '../includes/header.php';
 
-    // Добавление новости
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_news'])) {
         $title = $_POST['title'];
         $content = $_POST['content'];
@@ -26,7 +25,6 @@
         exit;
     }
 
-    // Редактирование новости
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_news'])) {
         $id = $_POST['id'];
         $title = $_POST['title'];
@@ -54,7 +52,6 @@
         exit;
     }
 
-    // Удаление новости (POST для безопасности)
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_news'])) {
         $id = $_POST['id'];
         $stmt = $pdo->prepare("SELECT image FROM news WHERE id = ?");
@@ -78,13 +75,11 @@
 
 <div class="admin-container">
     <div class="admin-dashboard">
-        <!-- Заголовок страницы -->
         <div class="admin-page-header">
             <h1>Управление новостями</h1>
             <p>Добавление, редактирование и удаление новостей</p>
         </div>
         
-        <!-- Форма добавления новости -->
         <div class="admin-form-section">
             <h2>Добавить новость</h2>
             <form method="POST" enctype="multipart/form-data">
@@ -100,11 +95,10 @@
                     <label>Изображение (jpg, png, gif, webp, до 2МБ)</label>
                     <input type="file" name="image">
                 </div>
-                <button type="submit" name="add_news" class="btn-save">➕ Добавить новость</button>
+                <button type="submit" name="add_news" class="btn-save">+ Добавить новость</button>
             </form>
         </div>
         
-        <!-- Список существующих новостей -->
         <h2 style="margin-bottom: 1.5rem; color: #1A2B4C;">Существующие новости</h2>
         <div class="admin-card-grid">
             <?php foreach ($news as $item): ?>
@@ -113,16 +107,15 @@
                         <?php if ($item['image']): ?>
                             <img src="<?= SITE_URL ?>/assets/uploads/<?= sanitize($item['image']) ?>" alt="<?= sanitize($item['title']) ?>">
                         <?php else: ?>
-                            <div class="admin-card-image-placeholder">📰</div>
+                            <div class="admin-card-image-placeholder"></div>
                         <?php endif; ?>
                     </div>
                     <div class="admin-card-content">
                         <div class="admin-card-title"><?= sanitize($item['title']) ?></div>
                         <div class="admin-card-meta">
-                            <span>📅 <?= date('d.m.Y', strtotime($item['created_at'])) ?></span>
+                            <span><?= date('d.m.Y', strtotime($item['created_at'])) ?></span>
                         </div>
                         
-                        <!-- Просмотр текста -->
                         <details class="admin-details">
                             <summary>Просмотр текста</summary>
                             <div class="admin-details-content">
@@ -130,7 +123,6 @@
                             </div>
                         </details>
                         
-                        <!-- Форма редактирования -->
                         <details class="admin-details">
                             <summary>Редактировать</summary>
                             <div class="admin-details-content">
@@ -151,18 +143,17 @@
                                         <input type="file" name="image">
                                     </div>
                                     <button type="submit" name="edit_news" class="btn-edit">
-                                        ✏️ Сохранить изменения
+                                        Сохранить изменения
                                     </button>
                                 </form>
                             </div>
                         </details>
                         
-                        <!-- Форма удаления -->
                         <div class="admin-card-actions">
                             <form method="POST" onsubmit="return confirm('Удалить новость?')" style="display: inline;">
                                 <input type="hidden" name="id" value="<?= $item['id'] ?>">
                                 <button type="submit" name="delete_news" class="btn-delete">
-                                    🗑️ Удалить
+                                    Удалить
                                 </button>
                             </form>
                         </div>

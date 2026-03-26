@@ -1,32 +1,33 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/functions.php';
+    require_once '../includes/config.php';
+    require_once '../includes/functions.php';
 
-if (isAdmin()) {
-    header('Location: index.php');
-    exit;
-}
-
-$error = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
-
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_id'] = $user['id'];
+    if (isAdmin()) {
         header('Location: index.php');
         exit;
-    } else {
-        $error = 'Неверный логин или пароль';
     }
-}
+
+    $error = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $username = $_POST['username'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        $user = $stmt->fetch();
+
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_id'] = $user['id'];
+            header('Location: index.php');
+            exit;
+        } else {
+            $error = 'Неверный логин или пароль';
+        }
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -58,13 +59,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form method="POST" class="admin-login-form">
                 <div class="form-group">
                     <label for="username">Логин</label>
-                    <input type="text" name="username" id="username" placeholder="admin" required>
+                    <input type="text" name="username" id="username" placeholder="login" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Пароль</label>
                     <input type="password" name="password" id="password" placeholder="••••••••" required>
                 </div>
-                <button type="submit" class="btn admin-login-btn">Войти в панель управления</button>
+                <button type="submit" class="btn" style="display: block; margin: 0 auto;">Войти в панель управления</button>
             </form>
             
             <div class="admin-back-link">

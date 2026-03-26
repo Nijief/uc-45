@@ -2,7 +2,6 @@
     require_once 'auth_check.php';
     include '../includes/header.php';
 
-    // Добавление программы
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_program'])) {
         $title = $_POST['title'];
         $duration = $_POST['duration'];
@@ -29,7 +28,6 @@
         exit;
     }
 
-    // Редактирование
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_program'])) {
         $id = $_POST['id'];
         $title = $_POST['title'];
@@ -60,7 +58,6 @@
         exit;
     }
 
-    // Удаление
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_program'])) {
         $id = $_POST['id'];
         $stmt = $pdo->prepare("SELECT image FROM programs WHERE id = ?");
@@ -84,13 +81,11 @@
 
 <div class="admin-container">
     <div class="admin-dashboard">
-        <!-- Заголовок страницы -->
         <div class="admin-page-header">
             <h1>Управление образовательными программами</h1>
             <p>Добавление, редактирование и удаление образовательных программ</p>
         </div>
         
-        <!-- Форма добавления программы -->
         <div class="admin-form-section">
             <h2>Добавить программу</h2>
             <form method="POST" enctype="multipart/form-data">
@@ -129,12 +124,11 @@
                 </div>
                 
                 <button type="submit" name="add_program" class="btn-save">
-                    ➕ Добавить программу
+                    + Добавить программу
                 </button>
             </form>
         </div>
-        
-        <!-- Список существующих программ -->
+
         <h2 style="margin-bottom: 1.5rem; color: #1A2B4C;">Существующие программы</h2>
         <div class="admin-card-grid">
             <?php foreach ($programs as $program): ?>
@@ -143,26 +137,24 @@
                         <?php if ($program['image']): ?>
                             <img src="<?= SITE_URL ?>/assets/uploads/<?= sanitize($program['image']) ?>" alt="<?= sanitize($program['title']) ?>">
                         <?php else: ?>
-                            <div class="admin-card-image-placeholder">📘</div>
+                            <div class="admin-card-image-placeholder"></div>
                         <?php endif; ?>
                     </div>
                     <div class="admin-card-content">
                         <div class="admin-card-title"><?= sanitize($program['title']) ?></div>
                         <div class="admin-card-meta">
-                            <span>⏱️ <?= sanitize($program['duration']) ?></span>
+                            <span>⏱<?= sanitize($program['duration']) ?></span>
                         </div>
                         
-                        <!-- Краткая информация -->
                         <details class="admin-details">
                             <summary>Подробнее</summary>
                             <div class="admin-details-content">
-                                <p><strong>📋 Требования:</strong> <?= sanitize($program['requirements']) ?></p>
-                                <p><strong>📖 Учебный план:</strong> <?= sanitize($program['curriculum']) ?></p>
-                                <p><strong>📝 Описание:</strong> <?= sanitize(mb_substr($program['description'], 0, 100)) ?>...</p>
+                                <p><strong>Требования:</strong> <?= sanitize($program['requirements']) ?></p>
+                                <p><strong>Учебный план:</strong> <?= sanitize($program['curriculum']) ?></p>
+                                <p><strong>Описание:</strong> <?= sanitize(mb_substr($program['description'], 0, 100)) ?>...</p>
                             </div>
                         </details>
                         
-                        <!-- Форма редактирования -->
                         <details class="admin-details">
                             <summary>Редактировать</summary>
                             <div class="admin-details-content">
@@ -201,18 +193,17 @@
                                     </div>
                                     
                                     <button type="submit" name="edit_program" class="btn-edit">
-                                        ✏️ Сохранить изменения
+                                        Сохранить изменения
                                     </button>
                                 </form>
                             </div>
                         </details>
                         
-                        <!-- Форма удаления -->
                         <div class="admin-card-actions">
                             <form method="POST" onsubmit="return confirm('Удалить программу?')" style="display: inline;">
                                 <input type="hidden" name="id" value="<?= $program['id'] ?>">
                                 <button type="submit" name="delete_program" class="btn-delete">
-                                    🗑️ Удалить
+                                    Удалить
                                 </button>
                             </form>
                         </div>

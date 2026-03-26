@@ -1,7 +1,4 @@
-// assets/js/script.js
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Поиск по сайту
     const searchInput = document.getElementById('searchInput');
     const searchResults = document.getElementById('searchResults');
     const searchForm = document.getElementById('searchForm');
@@ -10,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let searchTimeout;
     
-    // Функция поиска
     async function performSearch(query) {
         if (!query || query.length < 2) {
             searchResults.style.display = 'none';
@@ -18,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         try {
-            // Используем относительный путь к search.php
             const response = await fetch('/Test/admin/search.php?q=' + encodeURIComponent(query));
             
             if (!response.ok) {
@@ -47,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Поиск при вводе текста
     searchInput.addEventListener('input', function() {
         clearTimeout(searchTimeout);
         const query = this.value.trim();
@@ -62,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
     });
     
-    // Поиск при отправке формы
     if (searchForm) {
         searchForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -73,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Закрытие результатов при клике вне
     document.addEventListener('click', function(e) {
         const searchContainer = document.querySelector('.search-container');
         if (searchContainer && !searchContainer.contains(e.target)) {
@@ -81,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Активная ссылка в меню
     const currentPath = window.location.pathname;
     document.querySelectorAll('.nav-menu a').forEach(link => {
         const href = link.getAttribute('href');

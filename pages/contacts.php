@@ -15,14 +15,13 @@
     <div class="contact-grid">
         <div class="info-card">
             <h3>Контактная информация</h3>
-            <div class="contact-detail-item"><strong>Адрес:</strong><span>640000, г. Курган, Улица Ястржембского, 41а (территория АО «НПО Курганприбор»)</span></div>
+            <div class="contact-detail-item"><strong>Адрес:</strong><span>640007, г. Курган, Улица Ястржембского, 41а (территория АО «НПО Курганприбор»)</span></div>
             <div class="contact-detail-item"><strong>Телефон:</strong><span>+7 (3522) 45-67-89 доб. 1234</span></div>
-            <div class="contact-detail-item"><strong>Email:</strong><span>edu@kurganpribor.ru</span></div>
-            <div class="contact-detail-item"><strong>Часы:</strong><span>Пн–Пт 08:30 – 17:00</span></div>
-            <div class="map-placeholder">
-                <img src="<?= SITE_URL ?>/assets/images/map.png" alt="Схема проезда" style="max-width: 100%; border-radius: 12px;">
-                <strong>Схема проезда:</strong> автобусы №74, 28, остановка «Заводская». Учебный корпус, вход со стороны ул. Ястржембского.
-            </div>
+            <div class="contact-detail-item"><strong>Email:</strong><span>educenkurganpribor@gmail.com</span></div>
+            <div class="contact-detail-item"><strong>Часы:</strong><span>Пн–Пт 08:30 – 21:00</span></div>
+            <div class="contact-detail-item"><strong>КПП:</strong><span>450101001</span></div>
+            <div class="contact-detail-item"><strong>ИНН:</strong><span>4501129676</span></div>
+            <div class="contact-detail-item"><strong>Схема проезда:</strong><span>Автобусы №74, 28, остановка «Заводская». Учебный корпус, вход со стороны ул. Ястржембского.</span></div>
         </div>
         <div class="form-card">
             <h3>Форма обратной связи</h3>
@@ -44,6 +43,9 @@
             </form>
         </div>
     </div>
+    <div class="map-placeholder">
+        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6f5e9eae8e5658e02679965520ad0c0d9edbc0f7084049144183f62223227c7c&amp;source=constructor" width="100%" height="400" frameborder="0" allowfullscreen></iframe>
+    </div>
 </div>
 
 <script>
@@ -60,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const resultDiv = document.getElementById('formMsgResult');
             const submitBtn = this.querySelector('button[type="submit"]');
             
-            // Проверяем, что все элементы существуют
             if (!nameInput || !emailInput || !msgInput || !resultDiv || !submitBtn) {
                 console.error('Не найдены элементы формы');
                 if (resultDiv) resultDiv.innerHTML = '<span style="color:#dc3545;">Техническая ошибка. Попробуйте позже.</span>';
@@ -71,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = emailInput.value.trim();
             const message = msgInput.value.trim();
             
-            // Валидация
             if (!name) {
                 resultDiv.innerHTML = '<span style="color:#dc3545;">Пожалуйста, укажите ваше имя.</span>';
                 return;
@@ -109,16 +109,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     nameInput.value = '';
                     emailInput.value = '';
                     msgInput.value = '';
-                    // Очищаем сообщение через 5 секунд
                     setTimeout(() => {
                         if (resultDiv) resultDiv.innerHTML = '';
                     }, 5000);
                 } else {
-                    resultDiv.innerHTML = '<span style="color:#dc3545;">❌ Ошибка: ' + (result.error || 'Не удалось отправить сообщение') + '</span>';
+                    resultDiv.innerHTML = '<span style="color:#dc3545;">Ошибка: ' + (result.error || 'Не удалось отправить сообщение') + '</span>';
                 }
             } catch (error) {
                 console.error('Ошибка:', error);
-                resultDiv.innerHTML = '<span style="color:#dc3545;">❌ Ошибка сети. Проверьте подключение и попробуйте снова.</span>';
+                resultDiv.innerHTML = '<span style="color:#dc3545;">Ошибка сети. Проверьте подключение и попробуйте снова.</span>';
             } finally {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;

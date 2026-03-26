@@ -22,7 +22,7 @@
                     <?php if ($item['image']): ?>
                         <img src="<?= SITE_URL ?>/assets/uploads/<?= sanitize($item['image']) ?>" alt="<?= sanitize($item['title']) ?>">
                     <?php else: ?>
-                        <div class="card-image-placeholder">📰</div>
+                        <div class="card-image-placeholder"></div>
                     <?php endif; ?>
                 </div>
                 <div class="card-content">
